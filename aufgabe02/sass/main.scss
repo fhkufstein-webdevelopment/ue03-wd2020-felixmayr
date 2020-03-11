@@ -1,138 +1,175 @@
 @import "compass/reset";
 @import "compass/css3";
 
+/* --- Variables --- */
+$black: #000;
+$red: #d9534f;
+$orange: #f0ad4e;
+$green: #5cb85c;
+
+$trans-dur: 250ms;
+$trans-delay: 0;
+$trans-prop: width;
+$trans-timing: linear;
+
+$st-margin: 10px 5px 10px 5px;
+
+/* --- Mixins --- */
+@mixin withBorder($color) {
+  border: 1px solid $color;
+}
+
+/* --- Styles --- */
+
 body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-    font-family:'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-/* dies ist ein kommentar */
 #main {
-    width: 990px;
-    margin:0 auto;
+  width: 990px;
+  margin: 0 auto;
 }
 
-
-input[type="text"],input[type="password"] {
-    border:1px solid #000;
-    padding:5px;
-    margin:10px 5px 10px 5px;
-
-    width: 180px;
+input[type="text"],
+input[type="password"] {
+  @include withBorder($black);
+  padding: 5px;
+  margin: $st-margin;
+  width: 180px;
 }
 
 input[type="submit"] {
-    border:1px solid #000;
-    border-radius:0;
-    background-color:#fafafa;
-    margin:10px 5px 10px 5px;
-    cursor:pointer;
+  @include withBorder($black);
+  border-radius: 0;
+  background-color: #fafafa;
+  margin: $st-margin;
+  cursor: pointer;
 }
 
 label {
-    margin-left:5px;
+  margin-left: 5px;
 }
 
 .passwordField {
-    width:300px;
-    float:left;
+  width: 300px;
+  float: left;
 }
 
 .passwordFeedback {
-    width:250px;
-    float:left;
+  @extend .passwordField;
+  width: 250px;
 }
 
 .feedback {
-    margin:10px 5px 10px 5px;
-    font-size:11px;
-    font-weight:600;
-
+  margin: $st-margin;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .feedback.error {
-    color:#d9534f;
+  color: $red;
 }
 
 .feedback.warning {
-    color:#f0ad4e;
+  color: $orange;
 }
 
 .feedback.success {
-    color:#5cb85c;
+  color: $green;
 }
 
 .strengthIndicator {
-    margin:10px 5px 10px 5px;
-    width: 200px;
-    padding:5px;
-    height: 13px;
-    border:1px solid #d3d3d3;
+  margin: $st-margin;
+  width: 200px;
+  padding: 5px;
+  height: 13px;
+  @include withBorder(#d3d3d3);
 }
 
-.strengthIndicator::before {
-    content: "";
-    display: block;
-    height: 100%;
+.strengthIndicator {
+  content: "";
+  display: block;
+  height: 100%;
 
-    -moz-transition-property: width;
-    -o-transition-property: width;
-    -webkit-transition-property: width;
-    transition-property: width;
+  &::before {
+    -moz-transition-property: $trans-prop;
+    -o-transition-property: $trans-prop;
+    -webkit-transition-property: $trans-prop;
+    transition-property: $trans-prop;
 
-    -moz-transition-delay: 0;
-    -o-transition-delay: 0;
-    -webkit-transition-delay: 0;
-    transition-delay: 0;
+    -moz-transition-delay: $trans-delay;
+    -o-transition-delay: $trans-delay;
+    -webkit-transition-delay: $trans-delay;
+    transition-delay: $trans-delay;
 
-    -moz-transition-duration: 250ms;
-    -o-transition-duration: 250ms;
-    -webkit-transition-duration: 250ms;
-    transition-duration: 250ms;
+    -moz-transition-duration: $trans-dur;
+    -o-transition-duration: $trans-dur;
+    -webkit-transition-duration: $trans-dur;
+    transition-duration: $trans-dur;
 
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    -webkit-transition-timing-function: linear;
-    transition-timing-function: linear;
+    -moz-transition-timing-function: $trans-timing;
+    -o-transition-timing-function: $trans-timing;
+    -webkit-transition-timing-function: $trans-timing;
+    transition-timing-function: $trans-timing;
+  }
 }
 
-.passwordWrapper::after {
+.passwordWrapper {
+  &::after {
     content: "";
     display: block;
     clear: both;
     float: none;
+  }
 }
 
-.error .strengthIndicator::before {
-    width: 10%;
-    background-color: #d9534f;
-}
-
-.warning .strengthIndicator::before {
-    width: 60%;
-    background-color: #f0ad4e;
-}
-
-.success .strengthIndicator::before {
-    width: 100%;
-    background-color: #5cb85c;
-}
-
-.feedback.error, .feedback.warning, .feedback.success {
-    display: none;
-}
-
-.error .feedback.error {
+.error {
+  .strengthIndicator {
+    &::before {
+      width: 10%;
+      background-color: $red;
+    }
+  }
+  .feedback.error {
     display: block;
+  }
 }
 
-.warning .feedback.warning {
+.warning {
+  .strengthIndicator {
+    &::before {
+      width: 60%;
+      background-color: $orange;
+    }
+  }
+  .feedback.warning {
     display: block;
+  }
 }
 
-.success .feedback.success {
+.success {
+  .strengthIndicator {
+    &::before {
+      width: 100%;
+      background-color: $green;
+    }
+  }
+  .feedback.success {
     display: block;
+  }
 }
 
+.feedback.error {
+  display: none;
+}
+
+.feedback.warning {
+  display: none;
+}
+
+.feedback.success {
+  display: none;
+}
