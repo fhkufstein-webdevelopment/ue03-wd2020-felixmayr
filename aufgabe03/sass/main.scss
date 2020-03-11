@@ -3,49 +3,77 @@
 //sollte diese folgende Zeile zu einer Fehlermeldung führen - kommentieren Sie die folgende und die obere Zeile aus und kommentieren Sie die nachfolgende ein
 @import "compass/css3";
 
-
-
 @import "base"; /* inkludiert die Datei _base.scss */
 @import "button"; /* inkludiert die Datei _button.scss */
 
-
 .btn {
-    /* TODO */
+  @include transition-property(padding);
+  @include transition-duration(300ms);
+  @include transition-delay(0s);
+  @include transition-timing-function(linear);
 
-    &.ease-in {
-        /* TODO */
-    }
+  &.ease-in {
+    @include transition-timing-function(
+      ease-in
+    ); // Eingang wird nicht linear, sondern mit einer weichen Kurve animiert.
+  }
 
-    &.ease-out {
-        /* TODO */
-    }
+  &.ease-out {
+    @include transition-timing-function(
+      ease-out
+    ); // Ausgang wird nicht linear, sondern mit einer weichen Kurve animiert.
+  }
 
-    &.ease-in-out {
-        /* TODO */
-    }
+  &.ease-in-out {
+    @include transition-timing-function(
+      ease-in-out
+    ); // Ein- und Ausgang werden nicht linear, sondern mit einer weichen Kurve animiert.
+  }
 
-    &.green {
-        /* TODO */
-    }
+  &.green {
+    @include transition-property(all); // Alles wird animiert.
+  }
 
-    &.animation {
-        position: absolute;
-        left:0;
-        top:0;
-        right:auto;
-        bottom:auto;
-        animation-timing-function: linear;
-    }
+  &.animation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    animation-timing-function: linear;
+  }
 }
 
 body:hover .animation {
-    animation-name:myanimation2;
-    animation-duration:5s;
+  animation-name: myanimation2;
+  animation-duration: 5s;
+  transition-timing-function: ease;
 }
-
 
 .btn:hover {
-    padding-left: 25px;
-    padding-right: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
+@keyframes myanimation2 {
+  0% {
+    top: 0;
+    left: 20%;
+  }
+  25% {
+    top: 0;
+    left: calc(100% - 75px);
+  }
+  50% {
+    top: calc(100% - 44px);
+    left: calc(100% - 75px);
+  }
+  75% {
+    top: calc(100% - 44px);
+    left: 0;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
